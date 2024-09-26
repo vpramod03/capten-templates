@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: clusters
-  namespace: argo-cd
+  name: crossplane-aws-dev-k8s-packages
+  namespace: argocd
 spec:
   project: default
   source:
     repoURL: https://github.com/intelops/capten-templates.git
-    targetRevision: HEAD
-    path: argocd/apps/clusters
-    helm:
-      valueFiles:
-      - values.yaml
+    targetRevision: main
+    path: infra/clusters/compositions/aws
   destination:
     server: https://kubernetes.default.svc
-    namespace: tekton-pipelines
+    namespace: crossplane
+  syncPolicy:
+    automated:
+      prune: true
